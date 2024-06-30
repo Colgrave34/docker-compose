@@ -22,6 +22,9 @@ services:
       CONDUIT_MAX_CONCURRENT_REQUESTS: 100
       CONDUIT_ADDRESS: 0.0.0.0
       CONDUIT_CONFIG: '' # Ignore this
+    depends_on:
+      db:
+        condition: service_healthy
 
   cinny:
     image: ajbura/cinny:latest
@@ -32,7 +35,7 @@ services:
     volumes:
       - ~/matrix/cinny/config.json:/app/config.json
     depends_on:
-      dendrite:
+      conduit:
         condition: service_started
 
   db:
@@ -48,7 +51,7 @@ services:
       - POSTGRES_USER=matrix
       - POSTGRES_DB=matrix
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready' ]
+      test: ['CMD-SHELL','pg_isready']
 
 volumes:
   matrix_rocksdb:
