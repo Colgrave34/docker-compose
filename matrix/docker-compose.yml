@@ -18,7 +18,7 @@ services:
       CONDUIT_ALLOW_REGISTRATION: 'true'
       CONDUIT_ALLOW_FEDERATION: 'true'
       CONDUIT_ALLOW_CHECK_FOR_UPDATES: 'true'
-      CONDUIT_TRUSTED_SERVERS: '["matrix.org"]'
+      CONDUIT_TRUSTED_SERVERS: '["matrix.org","aria-net.org","gnome.org","kde.org","mozilla.org","opensuse.org","tchncs.de","tedomum.net","utwente.io"]'
       CONDUIT_MAX_CONCURRENT_REQUESTS: 100
       CONDUIT_ADDRESS: 0.0.0.0
       CONDUIT_CONFIG: '' # Ignore this
