@@ -47,8 +47,12 @@ services:
 
 volumes:
   nextcloud_data:
+    name: nextcloud_data
   nextcloud_db:
+    name: nextcloud_db
   nextcloud_radis:
+    name: nextcloud_radis
 
 networks:
   nextcloud:
+    name: nextcloud

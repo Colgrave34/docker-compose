@@ -35,6 +35,8 @@ services:
 
 volumes:
   joplin_data:
+    name: joplin_data
 
 networks:
   joplin:
+    name: joplin
