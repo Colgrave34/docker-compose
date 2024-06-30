@@ -6,7 +6,7 @@ services:
     container_name: matrix_conduit
     restart: unless-stopped
     ports:
-      - 8448:6167
+      - 8167:6167
     volumes:
       - matrix_rocksdb:/var/lib/matrix-conduit/
     environment:
