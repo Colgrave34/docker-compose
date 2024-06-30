@@ -23,14 +23,6 @@ services:
       CONDUIT_ADDRESS: 0.0.0.0
       CONDUIT_CONFIG: '' # Ignore this
 
-  nginx:
-    image: nginx:latest
-    container_name: matrix_nginx
-    restart: unless-stopped
-    volumes:
-      - ./nginx/matrix.conf:/etc/nginx/conf.d/matrix.conf # the config to serve the .well-known/matrix files
-      - ./nginx/www:/var/www/ # location of the client and server .well-known-files
-
   cinny:
     image: ajbura/cinny:latest
     container_name: matrix_cinny
