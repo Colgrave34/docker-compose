@@ -2,19 +2,19 @@ version: '3'
 
 services:
   nextcloud:
+    container_name: nextcloud-server
     image: nextcloud:latest
-    container_name: nextcloud_server
     restart: unless-stopped
     ports:
       - 8888:80
     volumes:
       - nextcloud_data:/var/www/html
     environment:
-      - POSTGRES_HOST=nextcloud_db
+      - POSTGRES_HOST=nextcloud-db
       - POSTGRES_PASSWORD=nextcloud
       - POSTGRES_USER=nextcloud
       - POSTGRES_DB=nextcloud
-      - REDIS_HOST=nextcloud_redis
+      - REDIS_HOST=nextcloud-redis
       - NEXTCLOUD_TRUSTED_DOMAINS="127.0.0.1, 192.168.1.0/24, cloud.example.com"
       - OVERWRITEPROTOCOL=https
     depends_on:
@@ -24,8 +24,8 @@ services:
         condition: service_healthy
 
   db:
+    container_name: nextcloud-db
     image: postgres:16-alpine
-    container_name: nextcloud_db
     restart: unless-stopped
     volumes:
       - nextcloud_db:/var/lib/postgresql/data
@@ -34,11 +34,11 @@ services:
       - POSTGRES_USER=nextcloud
       - POSTGRES_DB=nextcloud
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready', '-U', 'nextcloud' ]
+      test: [ 'CMD-SHELL', 'pg_isready' ]
 
   redis:
+    container_name: nextcloud-redis
     image: redis:alpine
-    container_name: nextcloud_redis
     restart: unless-stopped
     volumes:
       - nextcloud_radis:/data

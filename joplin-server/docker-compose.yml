@@ -2,8 +2,8 @@ version: '3'
 
 services:
   joplin_server:
+    container_name: joplin-server
     image: etechonomy/joplin-server:latest
-    container_name: joplin_server
     restart: unless-stopped
     ports:
       - 8230:22300
@@ -15,14 +15,14 @@ services:
       - POSTGRES_DATABASE=joplin
       - POSTGRES_USER=joplin 
       - POSTGRES_PORT=5432 
-      - POSTGRES_HOST=joplin_db
+      - POSTGRES_HOST=joplin-db
     depends_on:
       db:
         condition: service_healthy
 
   db:
+    container_name: joplin-db
     image: postgres:16-alpine
-    container_name: joplin_db
     restart: unless-stopped
     volumes:
       - joplin_data:/var/lib/postgresql/data

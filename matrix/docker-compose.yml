@@ -3,7 +3,7 @@ version: '3'
 services:
   conduit:
     image: matrixconduit/matrix-conduit:latest
-    container_name: matrix_conduit
+    container_name: matrix-conduit
     restart: unless-stopped
     ports:
       - 8167:6167
@@ -28,49 +28,49 @@ services:
 
   db:
     image: postgres:16-alpine
-    container_name: matrix_db
+    container_name: matrix-db
     restart: unless-stopped
     volumes:
       - matrix_db:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=matrix
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready', '-U', 'postgres' ]
+      test: [ 'CMD-SHELL', 'pg_isready' ]
 
   mautrix-discord:
-    container_name: mautrix_discord
+    container_name: mautrix-discord
     image: dock.mau.dev/mautrix/discord:latest
     restart: unless-stopped
     volumes:
-      - /home/colgrave/matrix/mautrix-discord:/data
+      - /matrix/mautrix-discord:/data
     depends_on:
       db:
         condition: service_healthy
 
   mautrix-slack:
-    container_name: mautrix_slack
+    container_name: mautrix-slack
     image: dock.mau.dev/mautrix/slack:latest
     restart: unless-stopped
     volumes:
-      - /home/colgrave/matrix/mautrix-slack:/data
+      - /matrix/mautrix-slack:/data
     depends_on:
       db:
         condition: service_healthy
 
   heisenbridge:
-    container_name: matrix_heisenbridge
+    container_name: matrix-heisenbridge
     image: hif1/heisenbridge:latest
     restart: unless-stopped
     command: -c /data/config.yaml -p 9898 http://conduit:6167
     volumes:
-      - /home/colgrave/matrix/heisenbridge:/data
+      - /matrix/heisenbridge:/data
     depends_on:
       conduit:
         condition: service_started
 
   cinny:
     image: ajbura/cinny:latest
-    container_name: matrix_cinny
+    container_name: matrix-cinny
     restart: unless-stopped
     ports:
       - 8080:80
