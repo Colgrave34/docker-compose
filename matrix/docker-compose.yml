@@ -58,8 +58,8 @@ services:
         condition: service_healthy
 
   heisenbridge:
-    image: hif1/heisenbridge:latest
     container_name: matrix_heisenbridge
+    image: hif1/heisenbridge:latest
     restart: unless-stopped
     command: -c /data/config.yaml -p 9898 http://conduit:6167
     volumes:
