@@ -35,7 +35,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=matrix
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready' ]
+      test: [ 'CMD-SHELL', 'pg_isready', '-U', 'postgres' ]
 
   mautrix-discord:
     container_name: mautrix-discord
