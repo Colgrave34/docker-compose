@@ -42,7 +42,7 @@ services:
     image: dock.mau.dev/mautrix/discord:latest
     restart: unless-stopped
     volumes:
-      - /matrix/mautrix-discord:/data
+      - /matrix/mautrix-discord:/data # EDIT THIS
     depends_on:
       db:
         condition: service_healthy
@@ -52,7 +52,7 @@ services:
     image: dock.mau.dev/mautrix/slack:latest
     restart: unless-stopped
     volumes:
-      - /matrix/mautrix-slack:/data
+      - /matrix/mautrix-slack:/data # EDIT THIS
     depends_on:
       db:
         condition: service_healthy
@@ -63,7 +63,7 @@ services:
     restart: unless-stopped
     command: -c /data/config.yaml -p 9898 http://conduit:6167
     volumes:
-      - /matrix/heisenbridge:/data
+      - /matrix/heisenbridge:/data # EDIT THIS
     depends_on:
       conduit:
         condition: service_started
@@ -75,7 +75,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - /matrix/cinny/config.json:/app/config.json
+      - /matrix/cinny/config.json:/app/config.json # EDIT THIS
     depends_on:
       conduit:
         condition: service_started
