@@ -26,6 +26,48 @@ services:
       db:
         condition: service_healthy
 
+  db:
+    image: postgres:16-alpine
+    container_name: matrix_db
+    restart: unless-stopped
+    volumes:
+      - matrix_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=matrix
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready' ]
+
+  mautrix-discord:
+    container_name: mautrix-discord
+    image: dock.mau.dev/mautrix/discord:latest
+    restart: unless-stopped
+    volumes:
+      - /matrix/mautrix-discord:/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+  mautrix-slack:
+    container_name: mautrix-slack
+    image: dock.mau.dev/mautrix/slack:latest
+    restart: unless-stopped
+    volumes:
+      - /matrix/mautrix-slack:/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+  heisenbridge:
+    image: hif1/heisenbridge:latest
+    container_name: matrix_heisenbridge
+    restart: unless-stopped
+    command: -c /data/config.yaml -p 9898 http://conduit:6167
+    volumes:
+      - /matrix/heisenbridge:/data
+    depends_on:
+      conduit:
+        condition: service_started
+
   cinny:
     image: ajbura/cinny:latest
     container_name: matrix_cinny
@@ -34,30 +76,6 @@ services:
       - 8080:80
     volumes:
       - /matrix/cinny/config.json:/app/config.json # EDIT THIS
-    depends_on:
-      conduit:
-        condition: service_started
-
-  db:
-    image: postgres:16-alpine
-    container_name: matrix_db
-    restart: unless-stopped
-    volumes:
-      # This will create a docker volume to persist the database files in.
-      # If you prefer those files to be outside of docker, you'll need to change this.
-      - matrix_db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=matrix
-    healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready' ]
-
-  heisenbridge:
-    image: hif1/heisenbridge:latest
-    container_name: matrix_heisenbridge
-    restart: unless-stopped
-    command: -c /data/config.yaml -p 9898 http://conduit:6167
-    volumes:
-      - /matrix/heisenbridge:/data # EDIT THIS
     depends_on:
       conduit:
         condition: service_started
