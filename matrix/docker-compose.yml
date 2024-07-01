@@ -53,6 +53,17 @@ services:
     healthcheck:
       test: [ 'CMD-SHELL', 'pg_isready' ]
 
+  heisenbridge:
+    image: hif1/heisenbridge:latest
+    container_name: matrix_heisenbridge
+    restart: unless-stopped
+    command: -c /heisenbridge/config.yaml -p 9898 http://conduit:6167
+    volumes:
+      - /matrix/heisenbridge/config.yaml:/heisenbridge/config.yaml # EDIT THIS
+    depends_on:
+      conduit:
+        condition: service_started
+
 volumes:
   matrix_rocksdb:
     name: matrix_rocksdb
