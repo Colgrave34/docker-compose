@@ -75,7 +75,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - /home/colgrave/matrix/cinny/config.json:/app/config.json
+      - /matrix/cinny/config.json:/app/config.json
     depends_on:
       conduit:
         condition: service_started
