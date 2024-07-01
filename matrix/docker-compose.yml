@@ -75,7 +75,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - /matrix/cinny/config.json:/app/config.json # EDIT THIS
+      - /matrix/cinny/config.json:/app/config.json
     depends_on:
       conduit:
         condition: service_started
