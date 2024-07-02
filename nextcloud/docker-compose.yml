@@ -2,8 +2,8 @@ version: '3'
 
 services:
   nextcloud:
-    container_name: nextcloud-server
     image: nextcloud:latest
+    container_name: nextcloud-server
     restart: unless-stopped
     ports:
       - 8888:80
@@ -24,8 +24,8 @@ services:
         condition: service_healthy
 
   db:
-    container_name: nextcloud-db
     image: postgres:16-alpine
+    container_name: nextcloud-db
     restart: unless-stopped
     volumes:
       - nextcloud_db:/var/lib/postgresql/data
@@ -37,8 +37,8 @@ services:
       test: [ 'CMD-SHELL', 'pg_isready' ]
 
   redis:
-    container_name: nextcloud-redis
     image: redis:alpine
+    container_name: nextcloud-redis
     restart: unless-stopped
     volumes:
       - nextcloud_radis:/data
