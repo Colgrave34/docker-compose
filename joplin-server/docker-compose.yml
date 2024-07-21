@@ -8,7 +8,7 @@ services:
     ports:
       - 8230:22300
     environment:
-      - APP_BASE_URL=https://joplin.example.com
+      - APP_BASE_URL=https://${JOPLIN_SERVER_HOST}
       - APP_PORT=22300
       - DB_CLIENT=pg
       - POSTGRES_PASSWORD=joplin
