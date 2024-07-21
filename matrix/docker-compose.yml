@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=matrix
     healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready' ]
+      test: [ 'CMD-SHELL', 'pg_isready -U postgres -d mautrix-discord', 'pg_isready -U postgres -d mautrix-slack' ]
 
   mautrix-discord:
     image: dock.mau.dev/mautrix/discord:latest
