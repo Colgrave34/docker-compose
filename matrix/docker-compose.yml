@@ -23,6 +23,18 @@ services:
       CONDUIT_ADDRESS: 0.0.0.0
       CONDUIT_CONFIG: '' # Ignore this
 
+  cinny:
+    image: ajbura/cinny:latest
+    container_name: matrix-cinny
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ${CINNY_CONFIG}:/app/config.json
+    depends_on:
+      conduit:
+        condition: service_started
+
   db:
     image: postgres:16-alpine
     container_name: matrix-db
@@ -61,18 +73,6 @@ services:
     command: -c /data/registration.yaml -p 9898 http://matrix-conduit:6167
     volumes:
       - ${HEISENBRIDGE_DIR}:/data
-    depends_on:
-      conduit:
-        condition: service_started
-
-  cinny:
-    image: ajbura/cinny:latest
-    container_name: matrix-cinny
-    restart: unless-stopped
-    ports:
-      - 8080:80
-    volumes:
-      - ${CINNY_CONFIG}:/app/config.json
     depends_on:
       conduit:
         condition: service_started
