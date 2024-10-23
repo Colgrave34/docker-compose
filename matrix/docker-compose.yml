@@ -77,6 +77,18 @@ services:
       conduit:
         condition: service_started
 
+  cinny:
+    image: ajbura/cinny:latest
+    container_name: matrix-cinny
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ${CINNY_CONFIG}:/app/config.json
+    depends_on:
+      conduit:
+        condition: service_started
+
 volumes:
   matrix_rocksdb:
     name: matrix_rocksdb
