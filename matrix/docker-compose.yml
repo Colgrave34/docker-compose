@@ -23,18 +23,6 @@ services:
       CONDUIT_ADDRESS: 0.0.0.0
       CONDUIT_CONFIG: '' # Ignore this
 
-  element:
-    image: vectorim/element-web:latest
-    container_name: matrix-element
-    restart: unless-stopped
-    ports:
-      - 8080:80
-    volumes: 
-      - ${ELEMENT-CONFIG_DIR}:/app/config.json
-    depends_on:
-      conduit:
-        condition: service_started
-
   db:
     image: postgres:16-alpine
     container_name: matrix-db
